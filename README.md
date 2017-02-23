@@ -42,3 +42,10 @@ That will print out a dictionary, which you want to paste into the template:
 
 
     database/template_migration.py
+
+
+To fix models.py, use the `fix_models.py` script that will help you on the
+repetitive tasks.
+
+
+    python database/fix_models.py missing_indexes.py
