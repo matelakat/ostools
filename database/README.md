@@ -35,17 +35,17 @@ Find out missing indexes (the script outputs a python structure that could be
 used with the provided template for cinder):
 
 
-    database/discover_indexes.py postgresql://cindersample > missing_indexes.py
+    python discover_indexes.py postgresql://cindersample > missing_indexes.py
 
 
 That will print out a dictionary, which you want to paste into the template:
 
 
-    database/template_migration.py
+    python template_migration.py
 
 
 To fix models.py, use the `fix_models.py` script that will help you on the
 repetitive tasks.
 
 
-    python database/fix_models.py missing_indexes.py
+    python fix_models.py missing_indexes.py
