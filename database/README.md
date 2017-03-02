@@ -1,6 +1,6 @@
-# ostools
-
-Some scripts used for OpenStack development
+Given that postgresql does not create indexes automatically on foreign keys,
+we found that some queries were slow. The aproach taken here is to inspect the
+model and create indexes on all foreign keys.
 
 ## Discover indexes on cinder database
 
