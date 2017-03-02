@@ -1,0 +1,12 @@
+--- engines.py.orig	2017-03-02 22:01:51.188681152 +0000
++++ engines.py	2017-03-02 22:02:17.404681146 +0000
+@@ -115,7 +115,8 @@
+         "pool_recycle": idle_timeout,
+         'convert_unicode': True,
+         'connect_args': {},
+-        'logging_name': logging_name
++        'logging_name': logging_name,
++        'echo': True,
+     }
+ 
+     _setup_logging(connection_debug)
