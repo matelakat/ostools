@@ -8,6 +8,7 @@ import collections
 
 FNAME_RE = re.compile(r'^cinder_db_stats_(?P<date>\d{8})\.txt$')
 
+
 def get_fnames(path):
     fnames = []
     for fname in os.listdir(path):
@@ -25,6 +26,7 @@ class StatRow:
         self.seq = int(row[1])
         self.idx = int(row[2])
         self.rows = int(row[3])
+
 
 class TableStats:
     def __init__(self, rows):
@@ -91,11 +93,9 @@ def main():
                 data[table_name][date] = diff_entry['score']
                 all_table_names.add(table_name)
 
-
         prev_statistics = actual_statistics
 
     as_csv(data, all_dates, all_table_names)
-
 
 
 if __name__ == "__main__":
