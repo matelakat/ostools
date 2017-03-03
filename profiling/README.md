@@ -4,5 +4,12 @@ used:
 
 ## Extract SQL queries
 
-First, I had to patch oslo using `patch_oslo.sh`.
+ - patch oslo using `patch_oslo.sh`.
+ - stop the api service, and set the number of workers to 1.
+ - start the api service,
+ - extract SQL statements from the log using:
 
+
+    ssh node1 tail -n 0 -f /var/log/cinder/api.log | python extract_sql_from_logs.py
+
+You can also specify `--include-data`, so data will be substituted.
