@@ -4,6 +4,7 @@ import datetime
 import sys
 import re
 import collections
+import argparse
 
 
 FNAME_RE = re.compile(r'^cinder_db_stats_(?P<date>\d{8})\.txt$')
@@ -59,6 +60,7 @@ def make_diff(table_a, table_b):
                 seq=new_seq_scans,
                 rows=b_row.rows - a_row.rows,
                 score=new_seq_scans * b_row.rows,
+                total_rows=b_row.rows,
             )
         else:
             raise NotImplementedError()
@@ -77,12 +79,26 @@ def as_csv(data, all_dates, all_table_names):
 
 
 def main():
+    parser = argparse.ArgumentParser(
+        description='Extract a differential table from time series data'
+    )
+    parser.add_argument(
+        'directory',
+        help='Directory containing time-series data'
+    )
+    parser.add_argument(
+        '--field',
+        choices=['idx', 'seq', 'rows', 'score', 'total_rows'],
+        default='score',
+        help='Field to display'
+    )
+    options = parser.parse_args()
+
     data = collections.defaultdict(dict)
     all_table_names = set()
     all_dates = set()
-    path_to_data = sys.argv[1]
     prev_statistics = None
-    for date, fname in get_fnames(path_to_data):
+    for date, fname in get_fnames(options.directory):
         actual_statistics = TableStats.load(fname)
 
         if prev_statistics:
@@ -90,7 +106,7 @@ def main():
             diff = list(make_diff(prev_statistics, actual_statistics))
             for diff_entry in diff:
                 table_name = diff_entry['table_name']
-                data[table_name][date] = diff_entry['score']
+                data[table_name][date] = diff_entry[options.field]
                 all_table_names.add(table_name)
 
         prev_statistics = actual_statistics
