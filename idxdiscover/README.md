@@ -8,4 +8,4 @@ a mysql and a postgresql installation.
 
 
     idxdiscover postgresql:///cinder > master.postgres.indexes
-    idxdiscover mysql+pymysql://cinder:cinderpass@localhost/cinder > master.postgres.indexes
+    idxdiscover mysql+pymysql://cinder:cinderpass@localhost/cinder > master.mysql.indexes

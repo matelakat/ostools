@@ -7,9 +7,9 @@ def discover_indexes(params):
     engine = create_engine(params.connection)
     insp = reflection.Inspector.from_engine(engine)
 
-    for table_name in sorted(insp.get_table_names()):
-        for index in sorted(insp.get_indexes(table_name), key=lambda x: x['name']):
-            print ','.join([table_name] + sorted(index['column_names']))
+    for table_name in insp.get_table_names():
+        for index in insp.get_indexes(table_name):
+            yield [table_name] + index['column_names']
 
 
 def parse_args_or_die():
@@ -20,6 +20,12 @@ def parse_args_or_die():
     return parser.parse_args()
 
 
+def print_indexes(indexes):
+    for idx in sorted(indexes):
+        print ','.join(idx)
+
+
 def main():
     params = parse_args_or_die()
-    discover_indexes(params)
+    indexes = list(discover_indexes(params))
+    print_indexes(indexes)
